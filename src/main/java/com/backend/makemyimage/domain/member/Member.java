@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,6 +19,7 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
+    @Column(name = "login_id")
     private String loginId;
 
     private String password;
@@ -27,11 +29,15 @@ public class Member {
     @OneToMany
     private List<Image> images;
 
+    public void addImages(Image image) {
+        this.images.add(image);
+    }
+
     @Builder
-    public Member(Long id, String loginId, String password, String email) {
-        this.id = id;
+    public Member(String loginId, String password, String email) {
         this.loginId = loginId;
         this.password = password;
         this.email = email;
+        this.images = new ArrayList<>();
     }
 }
