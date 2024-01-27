@@ -23,6 +23,7 @@ public class MemberController {
     public BaseResponse<LoginResponse> memberLogin(@RequestBody LoginRequest req, BindingResult bindingResult) throws Exception {
         if(bindingResult.hasErrors()) {
             //에러 발생
+            //Todo: 예외 처리 필요
             ObjectError objectError = bindingResult.getAllErrors().stream().findFirst().get();
             return BaseResponse.onFailure(400, objectError.getDefaultMessage(), null);
         }
