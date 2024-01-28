@@ -11,7 +11,15 @@ public class UserRepository {
 
     private final EntityManager em;
 
-    public void Join(User user) {
+    public void join(User user) {
         em.persist(user);
+    }
+
+    public User findById(Long id) {
+        return em.find(User.class, id);
+    }
+
+    public void login() {
+        //
     }
 }
