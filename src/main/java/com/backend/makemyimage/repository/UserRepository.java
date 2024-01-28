@@ -2,24 +2,16 @@ package com.backend.makemyimage.repository;
 
 import com.backend.makemyimage.domain.User;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
-@RequiredArgsConstructor
-public class UserRepository {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    private final EntityManager em;
+    Optional<User> findById(Long id);
 
-    public void join(User user) {
-        em.persist(user);
-    }
-
-    public User findById(Long id) {
-        return em.find(User.class, id);
-    }
-
-    public void login() {
-        //
-    }
 }
