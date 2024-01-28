@@ -7,7 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 class MakeMyImageApplicationTests {
 
     @Test
-    void contextLoads() {
+    public void h2ConnectionTest() {
+
     }
 
 }
