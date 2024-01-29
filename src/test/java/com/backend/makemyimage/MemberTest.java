@@ -5,7 +5,7 @@ import com.backend.makemyimage.dto.request.member.LoginRequest;
 import com.backend.makemyimage.dto.request.member.MemberRequest;
 import com.backend.makemyimage.dto.response.member.LoginResponse;
 import com.backend.makemyimage.dto.response.member.MemberInfoResponse;
-import com.backend.makemyimage.repository.MemberRepository;
+import com.backend.makemyimage.repository.member.MemberRepository;
 import com.backend.makemyimage.service.member.MemberService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
@@ -39,7 +39,7 @@ public class MemberTest {
         Optional<Member> optionalMember = memberRepository.findByLoginId(member.getLoginId());
 
         //회원이 존재해야 하고
-        assertThat(optionalMember.isPresent()).isTrue();
+        assertThat(optionalMember).isPresent();
 
         Member findMember = optionalMember.get();
 
