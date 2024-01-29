@@ -26,10 +26,13 @@ public class Image {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
+    private boolean deleted; //삭제 여부(soft delete)
+
     @Builder
     public Image(String keyword, String url, String loginId) {
         this.keyword = keyword;
         this.url = url;
         this.loginId = loginId;
+        this.deleted = false;
     }
 }
