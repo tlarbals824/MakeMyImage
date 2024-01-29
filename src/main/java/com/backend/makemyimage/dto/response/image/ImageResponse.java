@@ -5,18 +5,21 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Getter
 @NoArgsConstructor
 public class ImageResponse {
-    private Long id;
+    private Long imageId;
     private String url;
     private String keyword;
-
+    private LocalDateTime createdAt;
 
     @Builder
     public ImageResponse(Image image) {
-        this.id = image.getId();
+        this.imageId = image.getId();
         this.url = image.getUrl();
         this.keyword = image.getKeyword();
+        this.createdAt = image.getCreatedAt();
     }
 }
