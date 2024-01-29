@@ -1,4 +1,4 @@
-package com.backend.makemyimage.repository;
+package com.backend.makemyimage.repository.member;
 
 import com.backend.makemyimage.domain.member.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
