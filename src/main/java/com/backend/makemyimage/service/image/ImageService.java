@@ -1,5 +1,6 @@
 package com.backend.makemyimage.service.image;
 
+import com.backend.makemyimage.base.BaseResponse;
 import com.backend.makemyimage.domain.image.Image;
 import com.backend.makemyimage.dto.request.image.ImageRequest;
 import com.backend.makemyimage.dto.response.image.ImageListResponse;
@@ -32,7 +33,7 @@ public class ImageService {
     @Value("${rest-api-key}")
     private String REST_API_KEY;
 
-    public void create(ImageRequest imageRequest) throws Exception {
+    public ImageResponse create(ImageRequest imageRequest) throws Exception {
         //kakao api 사용해서 이미지 생성
         URL url = new URL("https://api.kakaobrain.com/v2/inference/karlo/t2i");
         HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
@@ -74,6 +75,10 @@ public class ImageService {
         if(memberRepository.findByLoginId(imageRequest.getLoginId()).isEmpty())
             throw new IllegalArgumentException("존재하지 않는 회원입니다.");
         imageRepository.save(newImage);
+
+        return ImageResponse.builder()
+                .image(newImage)
+                .build();
     }
 
     public ImageListResponse getAllByLoginId(String loginId) {
