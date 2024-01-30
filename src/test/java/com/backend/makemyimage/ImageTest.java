@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-public class ImageTest {
+class ImageTest {
     @Autowired
     private ImageService imageService;
     @Autowired
@@ -57,6 +57,16 @@ public class ImageTest {
         List<ImageResponse> imageList = myImages.getImageList();
         //then
         assertThat(imageList).hasSize(1);
+    }
+
+    @Test
+    @DisplayName("이미지 단건 조회 테스트")
+    void findImageById() {
+        //given
+        ImageResponse findImage = imageService.getImageById(1L);
+        //when
+        //then
+        assertThat(findImage.getImageId()).isEqualTo(1L);
     }
 
     private Member getMember() {
