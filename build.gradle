@@ -33,6 +33,7 @@ dependencies {
 
     //RDS 연동
     runtimeOnly 'com.mysql:mysql-connector-j'
+
 }
 
 tasks.named('test') {
