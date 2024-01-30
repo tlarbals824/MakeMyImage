@@ -20,7 +20,7 @@ public class UserController {
     @GetMapping("/user/join")
     public String postUserJoin(User user) {
         User user1 = new User();
-        user1.setName("심규민민규민");
+        user1.setName("심규민민규민니규");
         user1.setPassword("1q2w3e4r");
 
         userService.join(user1);
