@@ -14,10 +14,13 @@ class JasyptTest {
         String url = "db_url";
         String username = "user_name";
         String password = "user_password";
+        String restapikey = "rest_api_key";
 
-        System.out.println(jasyptEncoding(url));
-        System.out.println(jasyptEncoding(username));
-        System.out.println(jasyptEncoding(password));
+//        System.out.println(jasyptEncoding(url));
+//        System.out.println(jasyptEncoding(username));
+//        System.out.println(jasyptEncoding(password));
+        System.out.println(jasyptEncoding(restapikey));
+
 
         int a = 1;
         Assertions.assertThat(a).isEqualTo(1);
