@@ -1,6 +1,5 @@
 package com.backend.makemyimage.service.image;
 
-import com.backend.makemyimage.base.BaseResponse;
 import com.backend.makemyimage.domain.image.Image;
 import com.backend.makemyimage.dto.request.image.ImageRequest;
 import com.backend.makemyimage.dto.response.image.ImageListResponse;
@@ -31,7 +30,7 @@ public class ImageService {
     private final MemberRepository memberRepository;
 
     @Value("${rest-api-key}")
-    private String REST_API_KEY;
+    private String restApiKey;
 
     public ImageResponse create(ImageRequest imageRequest) throws Exception {
         //kakao api 사용해서 이미지 생성
@@ -40,7 +39,7 @@ public class ImageService {
 
         httpConn.setRequestMethod("POST");
         httpConn.setRequestProperty("Content-Type", "application/json");
-        httpConn.setRequestProperty("Authorization", "KakaoAK " + REST_API_KEY);
+        httpConn.setRequestProperty("Authorization", "KakaoAK " + restApiKey);
         httpConn.setDoOutput(true);
 
         OutputStreamWriter writer = new OutputStreamWriter(httpConn.getOutputStream());
@@ -95,7 +94,7 @@ public class ImageService {
 
     public ImageResponse getImageById(Long id){
         //이미지 단건 조회
-        Image findImage = imageRepository.findById(id)
+        Image findImage = imageRepository.findByImageId(id)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이미지입니다."));
 
         return ImageResponse.builder()
