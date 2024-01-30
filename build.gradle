@@ -34,6 +34,9 @@ dependencies {
     //RDS 연동
     runtimeOnly 'com.mysql:mysql-connector-j'
 
+    //jasypt
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
+
 }
 
 tasks.named('test') {
