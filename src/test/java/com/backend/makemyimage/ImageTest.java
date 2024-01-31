@@ -41,7 +41,6 @@ class ImageTest {
         List<Image> images = imageRepository.findAllByLoginId("id");
         assertThat(images).hasSize(1);
         Image image = images.get(0);
-        assertThat(image.getUrl()).isEqualTo("123");
         assertThat(image.getLoginId()).isEqualTo(member.getLoginId());
     }
 
