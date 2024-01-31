@@ -1,5 +1,6 @@
 package com.backend.makemyimage.service;
 
+import com.backend.makemyimage.DTO.request.LoginRequestDTO;
 import com.backend.makemyimage.domain.User;
 import com.backend.makemyimage.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,13 +28,13 @@ public class UserService {
         return optionalUser.get();
     }
 
-    public String login(String email, String password) {
-        Optional<User> optionalUser = userRepository.findByEmail(email);
+    public String login(LoginRequestDTO loginRequestDTO) {
+        Optional<User> optionalUser = userRepository.findByEmail(loginRequestDTO.getEmail());
         if (optionalUser.isEmpty()) {
             throw new IllegalStateException("존재하지 않는 email 입니다.");
         }
         User user = optionalUser.get();
-        if(!user.getPassword().equals(password)){
+        if(!user.getPassword().equals(loginRequestDTO.getPassword())){
             throw new IllegalStateException("비밀번호가 맞지 않습니다.");
         }
         System.out.println("로그인 성공!");
