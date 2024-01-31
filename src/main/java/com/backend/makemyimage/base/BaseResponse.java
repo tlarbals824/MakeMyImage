@@ -25,6 +25,13 @@ public class BaseResponse<T> { // BaseResponse 객체를 사용할때 성공, �
     }
 
     /**
+     * 무조건 성공 반환 (로드밸런스 상태검사)
+     */
+    public static <T> BaseResponse<T> onHeealty() {
+        return new BaseResponse<>(200, true, "건강합니다.", null);
+    }
+
+    /**
      * 요청에 실패한 경우
      */
     public static <T> BaseResponse<T> onFailure(int code, String message, T result) {
