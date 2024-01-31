@@ -1,6 +1,9 @@
 package com.backend.makemyimage.controller;
 
+import com.backend.makemyimage.DTO.request.JoinRequestDTO;
 import com.backend.makemyimage.DTO.request.LoginRequestDTO;
+import com.backend.makemyimage.DTO.request.SearchUserInfoRequestDTO;
+import com.backend.makemyimage.DTO.response.SearchUserInfoResponseDTO;
 import com.backend.makemyimage.domain.User;
 import com.backend.makemyimage.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -16,13 +19,8 @@ public class UserController {
      * 회원가입 api
      */
     @PostMapping("/user/join")
-    public String postUserJoin(User user) {
-        User user1 = new User();
-        user1.setName("심규민민규민니규");
-        user1.setEmail("simkm@gmail.com");
-        user1.setPassword("1q2w3e4r");
-
-        userService.join(user1);
+    public String postUserJoin(@RequestBody JoinRequestDTO joinRequestDTO) {
+        userService.join(joinRequestDTO);
         return "redirect:/";
     }
 
@@ -30,8 +28,12 @@ public class UserController {
      * 사용자 정보 조회 api
      */
     @GetMapping("/user/{userId}")
-    public User getUserInfo(@PathVariable Long userId) {
-        return userService.findById(userId);
+    public SearchUserInfoResponseDTO getUserInfo(@PathVariable Long userId) {
+        SearchUserInfoRequestDTO searchUserInfoRequestDTO = SearchUserInfoRequestDTO.builder()
+                .id(userId)
+                .build();
+
+        return userService.searchUserInfo(searchUserInfoRequestDTO);
     }
 
     /**

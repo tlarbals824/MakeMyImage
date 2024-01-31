@@ -1,6 +1,9 @@
 package com.backend.makemyimage.service;
 
+import com.backend.makemyimage.DTO.request.JoinRequestDTO;
 import com.backend.makemyimage.DTO.request.LoginRequestDTO;
+import com.backend.makemyimage.DTO.request.SearchUserInfoRequestDTO;
+import com.backend.makemyimage.DTO.response.SearchUserInfoResponseDTO;
 import com.backend.makemyimage.domain.User;
 import com.backend.makemyimage.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,16 +19,31 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public void join(User user) {
+    public void join(JoinRequestDTO joinRequestDTO) {
+
+        User user = User.builder()
+                .name(joinRequestDTO.getName())
+                .email(joinRequestDTO.getEmail())
+                .password(joinRequestDTO.getPassword())
+                .build();
+
         userRepository.save(user);
     }
 
-    public User findById(Long id) throws IllegalStateException{
-        Optional<User> optionalUser = userRepository.findById(id);
+    //이거 뿌듯한데 맞게 했는가? 서비스로직에서 이렇게 하는건가
+    public SearchUserInfoResponseDTO searchUserInfo(SearchUserInfoRequestDTO searchUserInfoRequestDTO) throws IllegalStateException{
+        Optional<User> optionalUser = userRepository.findById(searchUserInfoRequestDTO.getId());
         if (optionalUser.isEmpty()) {
             throw new IllegalStateException("존재하지 않는 유저 id입니다.");
         }
-        return optionalUser.get();
+        User user = optionalUser.get();
+
+        SearchUserInfoResponseDTO searchUserInfoResponseDTO = SearchUserInfoResponseDTO.builder()
+                .name(user.getName())
+                .email(user.getEmail())
+                .build();
+
+        return searchUserInfoResponseDTO;
     }
 
     public String login(LoginRequestDTO loginRequestDTO) {

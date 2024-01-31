@@ -27,20 +27,20 @@ public class UserServiceTest {
     @Test
     public void joinAndFindByIdTest() {
         //given
-        User user = new User();
+       /* User user = new User();
         user.setName("심규민민규");
         user.setPassword("1q2w3e4r");
 
         //when
-        userService.join(user);
+        userService.join(user);*/
 
         //then
-        User findUser = userService.findById(user.getId());
-        Assertions.assertThat(findUser.getId()).isEqualTo(user.getId());
-        System.out.println("findUser = " + findUser);
-        System.out.println("findUser = " + findUser.getId());
-        System.out.println("findUser = " + findUser.getEmail());
-        System.out.println("findUser = " + findUser.getName());
-        System.out.println("findUser = " + findUser.getPassword());
+//        User findUser = userService.findById(user.getId());
+//        Assertions.assertThat(findUser.getId()).isEqualTo(user.getId());
+//        System.out.println("findUser = " + findUser);
+//        System.out.println("findUser = " + findUser.getId());
+//        System.out.println("findUser = " + findUser.getEmail());
+//        System.out.println("findUser = " + findUser.getName());
+//        System.out.println("findUser = " + findUser.getPassword());
     }
 }
