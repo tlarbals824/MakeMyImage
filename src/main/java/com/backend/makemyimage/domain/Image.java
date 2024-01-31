@@ -7,6 +7,8 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter @Setter
 @Table(name="imagee")
@@ -14,5 +16,7 @@ import lombok.Setter;
 public class Image {
     @Id @GeneratedValue
     private Long id;
-    private String image;
+    private String keyword;
+    private String imageUrl;
+    private LocalDateTime createTime;
 }
