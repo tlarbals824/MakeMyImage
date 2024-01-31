@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/image")
-@CrossOrigin(origins = "make-my-image-app.vercel.app")
+@CrossOrigin(origins = "https://make-my-image-app.vercel.app")
 public class ImageController {
 
     private final ImageService imageService;
