@@ -11,17 +11,18 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name="userr")
+@Table(name="userr") //user 는 왜 !!!!! sql 예약어??
 public class User {
 
     @Id @GeneratedValue
+    @Column(name = "user_id")
     private Long id;
     private String name;
 
     private String email;
     private String password;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     private List<Image> images = new ArrayList<>();
 
     @Builder

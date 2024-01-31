@@ -1,5 +1,6 @@
 package com.backend.makemyimage.controller;
 
+import com.backend.makemyimage.DTO.request.CreateImageRequestDTO;
 import com.backend.makemyimage.DTO.response.SearchAllImagesResponseDTO;
 import com.backend.makemyimage.domain.Image;
 import com.backend.makemyimage.service.ImageService;
@@ -27,9 +28,17 @@ public class ImageController {
         return images;
     }
 
+    /**
+     * 이미지 생성 by User iD
+     * @return
+     */
     @PostMapping("/image/create")
     public String  createImage() {
+        CreateImageRequestDTO createImageRequestDTO = CreateImageRequestDTO.builder()
+                .keyword("puppy")
+                .userId(2L)
+                .build();
 
-        return imageService.createImage("puppy");
+        return imageService.createImage(createImageRequestDTO);
     }
 }

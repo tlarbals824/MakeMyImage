@@ -1,14 +1,18 @@
 package com.backend.makemyimage.service;
 
+import com.backend.makemyimage.DTO.request.CreateImageRequestDTO;
 import com.backend.makemyimage.DTO.response.SearchAllImagesResponseDTO;
 import com.backend.makemyimage.domain.Image;
+import com.backend.makemyimage.domain.User;
 import com.backend.makemyimage.repository.ImageRepository;
+import com.backend.makemyimage.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,6 +20,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class ImageService {
     private final ImageRepository imageRepository;
+    private final UserRepository userRepository;  //이거 써도 돼?? 이미지서비스에서?
 
     public List<SearchAllImagesResponseDTO> searchAllImages() {
         List<Image> images = imageRepository.findAll();
@@ -31,14 +36,18 @@ public class ImageService {
         return transferredImages;
     }
 
-    public String createImage(String keyword) {
+    public String createImage(CreateImageRequestDTO createImageRequestDTO) {
          //post 방식의 api 호출하고 결과물을 db에 저장
-        String imageUrl = callKarloAPI(keyword);
+        String imageUrl = callKarloAPI(createImageRequestDTO.getKeyword());
+
+        Optional<User> optionalUser = userRepository.findById(createImageRequestDTO.getUserId());
+        User user = optionalUser.get(); //없을때 예외처리?? 너무 코드 더ㅓㄹ워
 
         Image image = Image.builder()
-                .keyword(keyword)
+                .keyword(createImageRequestDTO.getKeyword())
                 .imageUrl(imageUrl)
                 .createTime(LocalDateTime.now())
+                .user(user)
                 .build();
 
         imageRepository.save(image);
