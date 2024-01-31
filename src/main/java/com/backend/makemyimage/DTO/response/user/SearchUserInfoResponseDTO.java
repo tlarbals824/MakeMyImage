@@ -1,4 +1,4 @@
-package com.backend.makemyimage.DTO.response;
+package com.backend.makemyimage.DTO.response.user;
 
 import lombok.Builder;
 import lombok.Getter;

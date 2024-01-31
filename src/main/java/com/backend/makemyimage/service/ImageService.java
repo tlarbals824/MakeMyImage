@@ -1,7 +1,8 @@
 package com.backend.makemyimage.service;
 
-import com.backend.makemyimage.DTO.request.CreateImageRequestDTO;
-import com.backend.makemyimage.DTO.response.SearchAllImagesResponseDTO;
+import com.backend.makemyimage.DTO.request.image.CreateImageRequestDTO;
+import com.backend.makemyimage.DTO.response.image.SearchAllImagesResponseDTO;
+import com.backend.makemyimage.DTO.response.image.SearchOneImageResponseDTO;
 import com.backend.makemyimage.domain.Image;
 import com.backend.makemyimage.domain.User;
 import com.backend.makemyimage.repository.ImageRepository;
@@ -22,8 +23,8 @@ public class ImageService {
     private final ImageRepository imageRepository;
     private final UserRepository userRepository;  //이거 써도 돼?? 이미지서비스에서?
 
-    public List<SearchAllImagesResponseDTO> searchAllImages() {
-        List<Image> images = imageRepository.findAll();
+    public List<SearchAllImagesResponseDTO> searchAllImages(Long userId) {
+        List<Image> images = imageRepository.findAllByUserId(userId);
         System.out.println("images = " + images.size());
         //객체 변환 챗지피티 감사요
         List<SearchAllImagesResponseDTO> transferredImages = images.stream()
@@ -35,6 +36,20 @@ public class ImageService {
         System.out.println("transferredImages = " + transferredImages.size());
         return transferredImages;
     }
+
+    public SearchOneImageResponseDTO searchOneImage(Long userId, Long imageId) {
+        Optional<Image> optionalImage = imageRepository.findByUserIdAndId(userId, imageId);
+        Image image = optionalImage.get();
+
+        SearchOneImageResponseDTO transferredImage = SearchOneImageResponseDTO.builder()
+                .imageUrl(image.getImageUrl())
+                .keyword(image.getKeyword())
+                .createTime(image.getCreateTime())
+                .build();
+
+        return transferredImage;
+    }
+
 
     public String createImage(CreateImageRequestDTO createImageRequestDTO) {
          //post 방식의 api 호출하고 결과물을 db에 저장

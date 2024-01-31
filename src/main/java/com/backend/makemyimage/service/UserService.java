@@ -1,9 +1,9 @@
 package com.backend.makemyimage.service;
 
-import com.backend.makemyimage.DTO.request.JoinRequestDTO;
-import com.backend.makemyimage.DTO.request.LoginRequestDTO;
-import com.backend.makemyimage.DTO.request.SearchUserInfoRequestDTO;
-import com.backend.makemyimage.DTO.response.SearchUserInfoResponseDTO;
+import com.backend.makemyimage.DTO.request.user.JoinRequestDTO;
+import com.backend.makemyimage.DTO.request.user.LoginRequestDTO;
+import com.backend.makemyimage.DTO.request.user.SearchUserInfoRequestDTO;
+import com.backend.makemyimage.DTO.response.user.SearchUserInfoResponseDTO;
 import com.backend.makemyimage.domain.User;
 import com.backend.makemyimage.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
