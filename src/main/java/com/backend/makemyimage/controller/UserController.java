@@ -4,10 +4,7 @@ import com.backend.makemyimage.domain.User;
 import com.backend.makemyimage.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,7 +14,7 @@ public class UserController {
     /**
      * 회원가입 api
      */
-    @GetMapping("/user/join")
+    @PostMapping("/user/join")
     public String postUserJoin(User user) {
         User user1 = new User();
         user1.setName("심규민민규민니규");
@@ -33,5 +30,13 @@ public class UserController {
     @GetMapping("/user/{userId}")
     public User getUserInfo(@PathVariable Long userId) {
         return userService.findById(userId);
+    }
+
+    /**
+     * 로그인 api
+     */
+    @PostMapping("/login")
+    public String postLogin(@RequestBody String email, String password){
+        return userService.login(email, password);
     }
 }
