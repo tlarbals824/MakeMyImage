@@ -59,7 +59,7 @@ public class ImageService {
     }
 
 
-    public String createImage(CreateImageRequestDTO createImageRequestDTO) {
+    public String createImage(CreateImageRequestDTO createImageRequestDTO) { //서비스에서도 DTO를 해야하나???
          //post 방식의 api 호출하고 결과물을 db에 저장
         KarloResponseDTO karloResponse = callKarloAPI(createImageRequestDTO.getKeyword());
 

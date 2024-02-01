@@ -73,20 +73,19 @@ public class ImageController {
      * @return
      */
     @PostMapping("/image/create")
-    public String  createImage(HttpServletRequest request) {
+    public String  createImage(@RequestBody String keyword,  HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null){
             String loggedInUserEmail = (String) session.getAttribute(LOGIN_MEMBER); //세션에서 로그인 이메일 가져옴
             Long userId = userService.searchByEmail(loggedInUserEmail).getId(); // 그걸로 유저아이디 가져옴
 
             CreateImageRequestDTO createImageRequestDTO = CreateImageRequestDTO.builder()
-                    .keyword("bts")
+                    .keyword(keyword)
                     .userId(userId)
                     .build();
             return imageService.createImage(createImageRequestDTO);
         }
         else{
-            System.out.println("세션널이미지ㅗ회 ㅠㅠㅠ");
             throw new IllegalArgumentException("세션이 없");
         }
 
@@ -96,7 +95,7 @@ public class ImageController {
      * 이미지 제거 by User iD
      * @return
      */
-    @PostMapping("/image/delete/{imageId}")
+    @DeleteMapping("/image/delete/{imageId}")
     public String deleteImage(@PathVariable(name = "imageId") Long imageId, HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null){
