@@ -10,10 +10,7 @@ import com.backend.makemyimage.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -37,15 +34,14 @@ public class ImageController {
             String loggedInUserEmail = (String) session.getAttribute(LOGIN_MEMBER); //세션에서 로그인 이메일 가져옴
             Long userId = userService.searchByEmail(loggedInUserEmail).getId(); // 그걸로 유저아이디 가져옴
             List<SearchAllImagesResponseDTO> images = imageService.searchAllImages(userId); // 유저아이디 이용해서 조회
-            System.out.println("전체 이미지 조회 전! loggedInUserEmail = " + loggedInUserEmail);
 
             return images;
 
         }
         else{
-            System.out.println("세션널이미지ㅗ회 ㅠㅠㅠ");
+            throw new IllegalArgumentException("세션이 없어서 전체 이미지 조회 불가");
         }
-        return Collections.emptyList();
+//        return Collections.emptyList();
 
     }
 
@@ -67,12 +63,8 @@ public class ImageController {
 
         }
         else{
-            System.out.println("세션널이미지ㅗ회 ㅠㅠㅠ");
-            throw new IllegalArgumentException("세션이 없");
+            throw new IllegalArgumentException("세션이 없어서 단건 이미지 조회 불가");
         }
-
-
-
 
     }
 
@@ -98,12 +90,29 @@ public class ImageController {
             throw new IllegalArgumentException("세션이 없");
         }
 
-
-
     }
 
-    @GetMapping("/test")
-    public String testFeign() {
-        return "feign!";
+    /**
+     * 이미지 제거 by User iD
+     * @return
+     */
+    @PostMapping("/image/delete/{imageId}")
+    public String deleteImage(@PathVariable(name = "imageId") Long imageId, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null){
+            String loggedInUserEmail = (String) session.getAttribute(LOGIN_MEMBER); //세션에서 로그인 이메일 가져옴
+            Long userId = userService.searchByEmail(loggedInUserEmail).getId(); // 그걸로 유저아이디 가져옴
+
+
+            imageService.deleteImage(userId,imageId);
+            return "잘지움";
+        }
+        else{
+
+            throw new IllegalArgumentException("세션이 없");
+        }
+
+
+
     }
 }

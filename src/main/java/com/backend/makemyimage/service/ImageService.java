@@ -84,4 +84,10 @@ public class ImageService {
         KarloResponseDTO karloResponse = karloOpenFeign.createImageKarlo(requestBody, "application/json", "KakaoAK f842b493ff26f47c87f481c478cc0c80");
         return karloResponse;
     }
+
+    public void deleteImage(Long userId, Long imageId) { //이런거 파라미터가 DTO가 되어야 함???????
+        Optional<Image> optionalImage = imageRepository.findByUserIdAndId(userId, imageId);
+        imageRepository.delete(optionalImage.get()); // 이럴거면 옵셔널 왜써
+
+    }
 }
