@@ -4,9 +4,11 @@ import com.backend.makemyimage.base.BaseResponse;
 import com.backend.makemyimage.dto.request.member.LoginRequest;
 import com.backend.makemyimage.dto.request.member.MemberRequest;
 import com.backend.makemyimage.dto.response.member.LoginResponse;
+import com.backend.makemyimage.dto.response.member.MemberInfoResponse;
 import com.backend.makemyimage.service.member.MemberService;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.BindingResult;
@@ -40,6 +42,19 @@ public class MemberController {
     @PostMapping("/signup")
     public void create(@RequestBody MemberRequest req) {
         memberService.create(req);
+    }
+
+    //회원 정보 조회
+    @Operation(summary = "회원정보 조회")
+    @GetMapping("/info/{loginId}")
+    public BaseResponse<MemberInfoResponse> memberInfo(@PathVariable @Parameter(name = "사용자 ID", example = "kusitms") String loginId) {
+        try {
+            MemberInfoResponse memberInfoResponse = memberService.getMemberInfo(loginId);
+            return BaseResponse.onSuccess(memberInfoResponse);
+        }
+        catch(Exception e) {
+            return BaseResponse.onFailure(400, e.getMessage(), null);
+        }
     }
 
     @Hidden
