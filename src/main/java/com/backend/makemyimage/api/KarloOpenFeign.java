@@ -13,15 +13,9 @@ import java.util.Map;
 
 @FeignClient(name = "KusitmsOpenFeign", url = "https://api.kakaobrain.com/v2/inference/karlo")
 public interface KarloOpenFeign {
-    @PostMapping("/user/join")
-    JoinResponseDTO joinUser(@RequestBody JoinRequestDTO joinRequestDTO);
 
-    @GetMapping("/test")
-    String test1();
-
-    @PostMapping("/t2i")
+    @PostMapping("/t2i") //이거맞냐
     KarloResponseDTO createImageKarlo(@RequestBody Map<String, String> requestBody,
                                       @RequestHeader(value="Accept") String contentType,
                                       @RequestHeader(value="Authorization") String authorizationHeader);
-
 }

@@ -82,10 +82,6 @@ public class ImageService {
         requestBody.put("prompt", keyword);
 
         KarloResponseDTO karloResponse = karloOpenFeign.createImageKarlo(requestBody, "application/json", "KakaoAK f842b493ff26f47c87f481c478cc0c80");
-//        System.out.println("karloResponse = " + karloResponse);
         return karloResponse;
-
-
-//        return "https://mk.kakaocdn.net/dna/karlo/image/2024-01-31/21/f107327a-1fa2-4ca9-8862-7acf3a4afa1a.webp?credential=smxRqiqUEJBVgohptvfXS5JoYeFv4Xxa&expires=1706706309&signature=UtZtuhx8PJUb7f9Y64EJe3N6pxw%3D";
     }
 }
