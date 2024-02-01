@@ -46,16 +46,27 @@ public class UserService {
         return searchUserInfoResponseDTO;
     }
 
-    public String login(LoginRequestDTO loginRequestDTO) {
-        Optional<User> optionalUser = userRepository.findByEmail(loginRequestDTO.getEmail());
-        if (optionalUser.isEmpty()) {
-            throw new IllegalStateException("존재하지 않는 email 입니다.");
+    public boolean login(LoginRequestDTO loginRequestDTO) { //유저를 반환하도록 해야하나?
+        try {
+            Optional<User> optionalUser = userRepository.findByEmail(loginRequestDTO.getEmail());
+            if (optionalUser.isEmpty()) {
+                throw new IllegalStateException("존재하지 않는 email 입니다.");
+            }
+            User user = optionalUser.get();
+            if (!user.getPassword().equals(loginRequestDTO.getPassword())) {
+                throw new IllegalStateException("비밀번호가 맞지 않습니다.");
+            }
+            System.out.println("로그인 성공!");
+            return true;
+        } catch (IllegalStateException e) {
+            // 에러 발생 시 로그 및 false 반환
+            System.out.println("로그인 실패: " + e.getMessage());
+            return false;
         }
-        User user = optionalUser.get();
-        if(!user.getPassword().equals(loginRequestDTO.getPassword())){
-            throw new IllegalStateException("비밀번호가 맞지 않습니다.");
-        }
-        System.out.println("로그인 성공!");
-        return "login 성공";
+    }
+
+    public User searchByEmail(String email) {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        return optionalUser.get();
     }
 }
