@@ -7,7 +7,8 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Builder
-@Getter @Setter // 이거하니까 not acceptable도 사라짐 40-6
+@Getter @Setter // 이거하니까 not acceptable도 사라짐 406+
+
 public class SearchOneImageResponseDTO {
     String imageUrl;
     String keyword;
