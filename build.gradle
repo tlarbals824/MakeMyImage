@@ -15,6 +15,15 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    set('springCloudVersion', "2023.0.0") //openfeign
+}
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
@@ -25,6 +34,10 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok' //이거?
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+
 }
 
 tasks.named('test') {

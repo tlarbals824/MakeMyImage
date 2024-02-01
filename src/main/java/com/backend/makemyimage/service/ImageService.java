@@ -1,8 +1,12 @@
 package com.backend.makemyimage.service;
 
 import com.backend.makemyimage.DTO.request.image.CreateImageRequestDTO;
+import com.backend.makemyimage.DTO.request.user.JoinRequestDTO;
+import com.backend.makemyimage.DTO.response.image.KarloResponseDTO;
 import com.backend.makemyimage.DTO.response.image.SearchAllImagesResponseDTO;
 import com.backend.makemyimage.DTO.response.image.SearchOneImageResponseDTO;
+import com.backend.makemyimage.DTO.response.user.JoinResponseDTO;
+import com.backend.makemyimage.api.KarloOpenFeign;
 import com.backend.makemyimage.domain.Image;
 import com.backend.makemyimage.domain.User;
 import com.backend.makemyimage.repository.ImageRepository;
@@ -12,7 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -22,6 +28,8 @@ import java.util.stream.Collectors;
 public class ImageService {
     private final ImageRepository imageRepository;
     private final UserRepository userRepository;  //이거 써도 돼?? 이미지서비스에서?
+    private final KarloOpenFeign karloOpenFeign;
+
 
     public List<SearchAllImagesResponseDTO> searchAllImages(Long userId) {
         List<Image> images = imageRepository.findAllByUserId(userId);
@@ -53,23 +61,31 @@ public class ImageService {
 
     public String createImage(CreateImageRequestDTO createImageRequestDTO) {
          //post 방식의 api 호출하고 결과물을 db에 저장
-        String imageUrl = callKarloAPI(createImageRequestDTO.getKeyword());
+        KarloResponseDTO karloResponse = callKarloAPI(createImageRequestDTO.getKeyword());
 
         Optional<User> optionalUser = userRepository.findById(createImageRequestDTO.getUserId());
         User user = optionalUser.get(); //없을때 예외처리?? 너무 코드 더ㅓㄹ워
 
         Image image = Image.builder()
                 .keyword(createImageRequestDTO.getKeyword())
-                .imageUrl(imageUrl)
+                .imageUrl(karloResponse.getImages().get(0).getImage())
                 .createTime(LocalDateTime.now())
                 .user(user)
                 .build();
 
         imageRepository.save(image);
-        return imageUrl;
+        return karloResponse.getImages().get(0).getImage();
     }
 
-    private String callKarloAPI(String keyword) {
-        return "https://mk.kakaocdn.net/dna/karlo/image/2024-01-31/21/f107327a-1fa2-4ca9-8862-7acf3a4afa1a.webp?credential=smxRqiqUEJBVgohptvfXS5JoYeFv4Xxa&expires=1706706309&signature=UtZtuhx8PJUb7f9Y64EJe3N6pxw%3D";
+    private KarloResponseDTO callKarloAPI(String keyword) {
+        Map<String, String> requestBody = new HashMap<>();
+        requestBody.put("prompt", keyword);
+
+        KarloResponseDTO karloResponse = karloOpenFeign.createImageKarlo(requestBody, "application/json", "KakaoAK f842b493ff26f47c87f481c478cc0c80");
+//        System.out.println("karloResponse = " + karloResponse);
+        return karloResponse;
+
+
+//        return "https://mk.kakaocdn.net/dna/karlo/image/2024-01-31/21/f107327a-1fa2-4ca9-8862-7acf3a4afa1a.webp?credential=smxRqiqUEJBVgohptvfXS5JoYeFv4Xxa&expires=1706706309&signature=UtZtuhx8PJUb7f9Y64EJe3N6pxw%3D";
     }
 }

@@ -46,10 +46,15 @@ public class ImageController {
     @PostMapping("/image/create")
     public String  createImage() {
         CreateImageRequestDTO createImageRequestDTO = CreateImageRequestDTO.builder()
-                .keyword("puppy")
+                .keyword("bts")
                 .userId(2L)
                 .build();
 
         return imageService.createImage(createImageRequestDTO);
+    }
+
+    @GetMapping("/test")
+    public String testFeign() {
+        return "feign!";
     }
 }
