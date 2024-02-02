@@ -48,20 +48,20 @@ public class UserController {
         boolean loginResult = userService.login(loginRequestDTO);
         if (loginResult) {
             //세션 발행
-            System.out.println("컨트롤러로그인성공");
+
             HttpSession session = request.getSession(); // 세션 발행
             session.setAttribute(LOGIN_MEMBER, loginRequestDTO.getEmail()); //세션저장소에저장
             
         } else {
             //not
-            System.out.println("컨트롤러로그인실패");
 
         }
         return "redirect:/"; //로그인 하면 일단 / 라우트로 이동
+        //이건 타임리프 기준이고, ApiResponse라는 베이스객체를 만들어서 사용하자
     }
 
     /**
-     * 로그인 후 이동할 홈매퍼??
+     * 로그인 후 이동할 홈매퍼?? 왜 필요한거지  ...
      */
     @GetMapping("/")
     public String homeLogin(HttpServletRequest request) {
@@ -76,29 +76,5 @@ public class UserController {
         }
     }
 
-    /**
-     * 세션확인용
-     */
-    @GetMapping("/session-info")
-    public String sessionInfo(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            return "세션이 없습니다.";
-        }
-        // 세션 id와 저장된 객체 정보 출력
-        System.out.println(session.getId() + ", " + session.getAttribute("loginMember"));
 
-//        //세션 데이터 출력
-//        session.getAttributeNames().asIterator()
-//                .forEachRemaining(name -> log.info("session name={}, value={}", name, session.getAttribute(name)));
-//
-//        log.info("sessionId={}", session.getId());
-//        log.info("getMaxInactiveInterval={}", session.getMaxInactiveInterval());
-//        log.info("creationTime={}", new Date(session.getCreationTime()));
-//        log.info("lastAccessedTime={}", new Date(session.getLastAccessedTime()));
-//        log.info("isNew={}", session.isNew());
-
-        return "세션 출력";
-
-    }
 }

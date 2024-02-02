@@ -40,8 +40,9 @@ public class ImageController {
         }
         else{
             throw new IllegalArgumentException("세션이 없어서 전체 이미지 조회 불가");
+            // 클라를 위해 에러반환이 아닌, ApiResponse로 반환? 404반환? 401ㅇㅇ
         }
-//        return Collections.emptyList();
+
 
     }
 
@@ -72,8 +73,9 @@ public class ImageController {
      * 이미지 생성 by User iD
      * @return
      */
-    @PostMapping("/image/create")
-    public String  createImage(@RequestBody String keyword,  HttpServletRequest request) {
+    @PostMapping("/image/create") //api에 동사는 쓰지 않는다. 포스트 자체가 생성임
+
+    public String  createImage(@RequestBody  String keyword,  HttpServletRequest request) { //keyword하나인경우도 DTO?
         HttpSession session = request.getSession(false);
         if (session != null){
             String loggedInUserEmail = (String) session.getAttribute(LOGIN_MEMBER); //세션에서 로그인 이메일 가져옴
@@ -86,7 +88,7 @@ public class ImageController {
             return imageService.createImage(createImageRequestDTO);
         }
         else{
-            throw new IllegalArgumentException("세션이 없");
+            throw new IllegalArgumentException("세션이 없어서 이미지 생성 불가능");
         }
 
     }
@@ -95,7 +97,7 @@ public class ImageController {
      * 이미지 제거 by User iD
      * @return
      */
-    @DeleteMapping("/image/delete/{imageId}")
+    @DeleteMapping("/image/delete/{imageId}") //얘도 delete라는 동사 x
     public String deleteImage(@PathVariable(name = "imageId") Long imageId, HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null){
@@ -103,12 +105,12 @@ public class ImageController {
             Long userId = userService.searchByEmail(loggedInUserEmail).getId(); // 그걸로 유저아이디 가져옴
 
 
-            imageService.deleteImage(userId,imageId);
+            imageService.deleteImage(userId,imageId); //논리삭제는 미안해요
             return "잘지움";
         }
         else{
 
-            throw new IllegalArgumentException("세션이 없");
+            throw new IllegalArgumentException("세션이 없어서 이미지 삭제 불가");
         }
 
 

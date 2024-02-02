@@ -14,7 +14,7 @@ import java.util.List;
 public class Image {
     @Id @GeneratedValue
     @Column(name = "image_id")
-    private Long id;
+    private Long id; //얘로 한다
     private String keyword;
     private String imageUrl;
     private LocalDateTime createTime;

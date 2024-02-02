@@ -34,6 +34,6 @@ public class User {
         this.images = images;
     }
 
-    public User() { //왜?
+    public User() { //왜? : 자바 상식. 생성자 오버로딩을 할거면 기본 생성자가 있어야 한다.
     }
 }

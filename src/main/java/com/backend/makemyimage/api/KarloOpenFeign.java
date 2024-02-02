@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.Map;
 
-@FeignClient(name = "KusitmsOpenFeign", url = "https://api.kakaobrain.com/v2/inference/karlo")
+@FeignClient(name = "KusitmsOpenFeign", url = "https://api.kakaobrain.com/v2/inference/karlo/t2i")
 public interface KarloOpenFeign {
 
-    @PostMapping("/t2i") //이거맞냐
+    @PostMapping("")
     KarloResponseDTO createImageKarlo(@RequestBody Map<String, String> requestBody,
-                                      @RequestHeader(value="Accept") String contentType,
+                                      @RequestHeader(value="Accept") String contentType, //컨텐트타입인데 왜 Accept?
                                       @RequestHeader(value="Authorization") String authorizationHeader);
 }
