@@ -23,7 +23,8 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user")
-    private List<Image> images = new ArrayList<>();
+    private List<Image> images ; // 얘가 없어도 된다 업애기
+    //이미지에서 파인드바이유저아이디, 이미지레포지토리
 
     @Builder
     public User(Long id, String name, String email, String password, List<Image> images) {

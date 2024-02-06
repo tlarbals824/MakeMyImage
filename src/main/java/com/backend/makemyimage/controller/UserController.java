@@ -29,8 +29,8 @@ public class UserController {
     /**
      * 사용자 정보 조회 api
      */
-    @GetMapping("/user/{userId}")
-    public SearchUserInfoResponseDTO getUserInfo(@PathVariable Long userId) {
+    @GetMapping("/user/{userId}") /   id=?
+    public  SearchUserInfoResponseDTO getUserInfo(@PathVariable Long userId) {
         SearchUserInfoRequestDTO searchUserInfoRequestDTO = SearchUserInfoRequestDTO.builder()
                 .id(userId)
                 .build();
