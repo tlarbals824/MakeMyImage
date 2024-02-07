@@ -23,7 +23,7 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user")
-    private List<Image> images ; // 얘가 없어도 된다 업애기
+    private List<Image> images ; // 얘가 없어도 된다 업애
     //이미지에서 파인드바이유저아이디, 이미지레포지토리
 
     @Builder
